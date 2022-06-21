@@ -6,8 +6,8 @@ import data from "../assets/data.json"
 import { MItemProp, IItemProp, itemProp, EItemProp } from "../components/TypeResource"
 
 
-let arrayIncomes = data.map(obj => obj.incomes) // renvoie un tableau de tableaux
-let arrayExpenses = data.map(obj => obj.expenses) // renvoie un tableau de tableaux
+let arrayIncomes = data.map(obj => obj.incomes) // <= renvoie un tableau de tableaux d'objet
+let arrayExpenses = data.map(obj => obj.expenses) // <= renvoie un tableau de tableaux d'objet
 
 const IAmount = arrayIncomes.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
 const EAmount = arrayExpenses.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
@@ -24,12 +24,8 @@ for (let i = 0; i < EAmount.length; i++) {
     ETotal += EAmount[i]
 }
 
-
-
-
-const total = "2500"
-
-export default function HomeScreen({ navigation }: any) {
+// Ecran principal
+const HomeScreen = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
@@ -129,3 +125,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     }
 })
+
+export default HomeScreen

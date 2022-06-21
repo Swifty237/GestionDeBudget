@@ -9,7 +9,7 @@ import { Picker } from "@react-native-picker/picker"
 
 
 
-export default function Expenses() {
+const Expenses = () => {
 
     const [selectedItem, setSelectedItem] = useState();
 
@@ -150,3 +150,5 @@ const styles = StyleSheet.create({
         marginBottom: 5
     }
 })
+
+export default Expenses 

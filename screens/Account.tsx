@@ -4,9 +4,10 @@ import data from "../assets/data.json"
 import Moment from "moment"
 import { MItemProp, IItemProp, itemProp, EItemProp } from "../components/TypeResource"
 
-let arrayIncomes = data.map(obj => obj.incomes) // renvoie un tableau de tableaux
-let arrayExpenses = data.map(obj => obj.expenses) // renvoie un tableau de tableaux
+let arrayIncomes = data.map(obj => obj.incomes)
+let arrayExpenses = data.map(obj => obj.expenses)
 
+//Cette fonction me permet de transformer _id_incomes et _id_expenses en id pour la fusion
 const renameId = (op: Array<any>) => {
     let toto: MItemProp
 
@@ -27,14 +28,15 @@ const renameId = (op: Array<any>) => {
     return arrayRenamedId
 }
 
-const mergedArray = renameId(arrayIncomes).concat(renameId(arrayExpenses))
+const mergedArray = renameId(arrayIncomes).concat(renameId(arrayExpenses)) // <= Fusion
 
-const sortedArray = mergedArray.flat().sort((a, b) => {
+const sortedArray = mergedArray.flat().sort((a, b) => { // <= Tri par date croissante
     return Date.parse(a.date) - Date.parse(b.date)
 })
 
 const expensesId = arrayExpenses.flat().map(e => e._id_expense)
 
+// Ecran de compte
 const AccountScreen = () => {
 
     return (

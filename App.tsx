@@ -20,7 +20,7 @@ import Expenses from "./screens/secondary_screens/Expenses"
 import Incomes from "./screens/secondary_screens/Incomes"
 
 
-export default function App() {
+const App = () => {
 
   const { Navigator, Screen } = createNativeStackNavigator()
 

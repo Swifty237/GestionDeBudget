@@ -68,8 +68,8 @@ const barData = {
 
 const graphStyle = "transparent"
 
-
-export default function StatsScreen() {
+// Ecran de stats
+const StatsScreen = () => {
 
     return (
         <View style={styles.container}>
@@ -117,11 +117,12 @@ export default function StatsScreen() {
                 <View style={styles.barCh}>
                     <Text style={{ color: "black", textAlign: "center", marginTop: 5 }}>Bar chart</Text>
                     <BarChart
-                        style={graphStyle}
+                        style={undefined}
                         data={barData}
                         width={screenWidth}
                         height={200}
                         yAxisLabel="€"
+                        yAxisSuffix=""
                         chartConfig={chartConfig}
                         verticalLabelRotation={0}
                     />
@@ -153,3 +154,5 @@ const styles = StyleSheet.create({
         borderColor: "#34495e"
     }
 })
+
+export default StatsScreen
