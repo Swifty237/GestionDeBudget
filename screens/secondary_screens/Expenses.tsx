@@ -11,8 +11,6 @@ import { Picker } from "@react-native-picker/picker"
 
 const Expenses = () => {
 
-    const [selectedItem, setSelectedItem] = useState();
-
 
     const validationSchema = yup.object().shape({
         name: yup.string().required("Champ obligatoire"),
@@ -22,11 +20,6 @@ const Expenses = () => {
         category: yup.string().required("Champ obligatoire"),
         comments: yup.string()
     })
-
-    const handleSubmit = (values: any) => {
-        console.log(values.name)
-        console.log(values.firstName)
-    }
 
     return (
         <Formik
@@ -39,7 +32,7 @@ const Expenses = () => {
                 category: "",
                 comments: ""
             }}
-            onSubmit={handleSubmit}
+            onSubmit={values => console.log(values)}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <View style={styles.container}>
@@ -58,8 +51,9 @@ const Expenses = () => {
                                 <Picker
                                     dropdownIconColor="black"
                                     style={styles.picker}
-                                    selectedValue={selectedItem}
-                                    onValueChange={(itemValue, itemIndex) => setSelectedItem(itemValue)}>
+                                    selectedValue={values.category}
+                                    onValueChange={handleChange("category")}>
+                                    <Picker.Item style={{ color: "grey" }} label="Choisissez une catégorie" value=" " />
                                     <Picker.Item label="Alimentaires" value="alimentaires" />
                                     <Picker.Item label="Factures" value="factures" />
                                     <Picker.Item label="Transport" value="transport" />

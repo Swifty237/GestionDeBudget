@@ -2,30 +2,39 @@ import React, { useState } from "react"
 import { Formik } from "formik"
 import { View, ScrollView, StyleSheet, Text } from "react-native"
 import Input from "../../components/Input"
-import Button from "../../components/Button"
+import Btn from "../../components/Button"
 import * as yup from "yup"
 import DatePicker from "../../components/DatePicker"
 import { Picker } from "@react-native-picker/picker"
+import Realm from "realm"
+
+
+const validationSchema = yup.object().shape({
+    name: yup.string().required("Champ obligatoire"),
+    firstName: yup.string().required("Champ obligatoire"),
+    amount: yup.number().required("Champ obligatoire"),
+    date: yup.date().required("Champ obligatoire"),
+    category: yup.string().required("Champ obligatoire"),
+    comments: yup.string(),
+})
+
+const incomeSchema = {
+    name: "income",
+    properties: {
+        _id: "int",
+        name: "string",
+        firstName: "string",
+        amount: "int",
+        date: "string",
+        category: "string",
+        comments: "string"
+    },
+    primaryKey: "_id",
+}
 
 
 
 const Incomes = () => {
-
-    const [selectedItem, setSelectedItem] = useState()
-
-    const validationSchema = yup.object().shape({
-        name: yup.string().required("Champ obligatoire"),
-        firstName: yup.string().required("Champ obligatoire"),
-        amount: yup.number().required("Champ obligatoire"),
-        date: yup.date().required("Champ obligatoire"),
-        category: yup.string().required("Champ obligatoire"),
-        comments: yup.string(),
-    })
-
-    const handleSubmit = (values: any) => {
-        console.log(values.name)
-        console.log(values.firstName)
-    }
 
     return (
         <Formik
@@ -38,7 +47,7 @@ const Incomes = () => {
                 category: "",
                 comments: ""
             }}
-            onSubmit={handleSubmit}
+            onSubmit={values => console.log(values)}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 
@@ -58,20 +67,20 @@ const Incomes = () => {
                                 <Picker
                                     dropdownIconColor="black"
                                     style={styles.picker}
-                                    selectedValue={selectedItem}
-                                    onValueChange={(itemValue, itemIndex) => setSelectedItem(itemValue)}>
-                                    <Picker.Item label="Salaire et assimilé" value="salaire" />
-                                    <Picker.Item label="Revenu financier" value="rFinancier" />
+                                    selectedValue={values.category}
+                                    onValueChange={handleChange("category")}>
+                                    <Picker.Item style={{ color: "grey" }} label="Choisissez une catégorie" value=" " />
+                                    <Picker.Item label="Salaire et assimilé" value="salaire et assimilé" />
+                                    <Picker.Item label="Revenu financier" value="Revenu Financier" />
                                     <Picker.Item label="Rente" value="rente" />
-                                    <Picker.Item label="Pension alimentaire" value="pAlimentaire" />
-                                    <Picker.Item label="Allocation chômage" value="aChomage" />
-                                    <Picker.Item label="Prestations sociales" value="pSociales" />
+                                    <Picker.Item label="Pension alimentaire" value="Pension Alimentaire" />
+                                    <Picker.Item label="Allocation chômage" value="Allocation Chomage" />
+                                    <Picker.Item label="Prestations sociales" value="Prestations Sociales" />
                                     <Picker.Item label="Revenu foncier" value="rFoncier" />
-                                    <Picker.Item label="Revenu exceptionnel" value="rExceptionnel" />
-                                    <Picker.Item label="Autre revenu" value="Arevenu" />
+                                    <Picker.Item label="Revenu exceptionnel" value="Revenu Exceptionnel" />
+                                    <Picker.Item label="Autre revenu" value="Autre revenu" />
                                 </Picker>
                             </View>
-
                         </View>
 
                         <Input label="Commentaires" placeholder="" value={values.comments} onChangeText={handleChange("comments")} onBlur={() => handleBlur("comments")} error={errors.comments} />
@@ -79,7 +88,7 @@ const Incomes = () => {
 
                     <View style={styles.containerButton}>
                         <View style={styles.register}>
-                            <Button label="Enregistrer" textStyle={styles.btnText} onPress={handleSubmit} />
+                            <Btn label="Enregistrer" textStyle={styles.btnText} onPress={() => handleSubmit()} />
                         </View>
                     </View>
                 </View>

@@ -28,6 +28,7 @@
     "react-native-screens": "^3.13.1",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
+    "realm": "^10.19.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

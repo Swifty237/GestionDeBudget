@@ -32,7 +32,7 @@ const renameId = (op: Array<any>) => {
 const mergedArray = renameId(arrayIncomes).concat(renameId(arrayExpenses))
 
 const sortedArray = mergedArray.flat().sort((a, b) => {
-    return Date.parse(a.date) - Date.parse(b.date)
+    return Date.parse(b.date) - Date.parse(a.date)
 })
 
 const expensesId = arrayExpenses.flat().map(e => e._id_expense)
@@ -47,10 +47,10 @@ const ListOp = () => {
                 <ScrollView>
                     {
                         sortedArray.slice(0, 9).map((obj, index) => (
-                            <View key={index} style={{ marginVertical: 10, borderWidth: 7, borderColor: expensesId.includes(obj.id) ? "red" : "#2ecc71", marginHorizontal: 10 }}>
-                                <Text style={{ margin: 7, color: expensesId.includes(obj.id) ? "red" : "#ecf0f1", fontSize: 18 }}>{obj.amount + (expensesId.includes(obj.id) ? " -" : "")}</Text>
-                                <Text style={{ margin: 7 }}>{obj.category}</Text>
-                                <Text style={{ margin: 7, fontWeight: "bold", fontSize: 11 }}>{Moment(obj.date).format("DD/MM/YYYY - h:mm")}</Text>
+                            <View key={index} style={{ marginVertical: 10, borderWidth: 2, borderColor: expensesId.includes(obj.id) ? "red" : "#2ecc71", marginHorizontal: 10, backgroundColor: "white" }}>
+                                <Text style={{ margin: 7, color: expensesId.includes(obj.id) ? "red" : "#2c3e50", fontSize: 18 }}>{obj.amount + (expensesId.includes(obj.id) ? " -" : "")}</Text>
+                                <Text style={{ margin: 7, color: "#2c3e50" }}>{obj.category}</Text>
+                                <Text style={{ margin: 7, color: "#bdc3c7", fontWeight: "bold", fontSize: 12 }}>{Moment(obj.date).format("DD/MM/YYYY - h:mm")}</Text>
                             </View>))
                     }
                 </ScrollView>

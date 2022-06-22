@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }: any) => {
 
             </View>
             <View style={styles.lastOpBox}>
-                <Text style={{ color: "black", textAlign: "center", marginVertical: 10, fontSize: 20, fontWeight: "bold" }}>Dernières opérations</Text>
+                <Text style={{ textAlign: "center", marginVertical: 10, fontSize: 20, fontWeight: "bold" }}>Dernières opérations</Text>
                 <ListOp />
             </View>
             <View style={styles.soldBox}>
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
 
     lastOpBox: {
         flex: 3,
-        width: "100%",
-        backgroundColor: "#ecf0f1"
+        width: "100%"
     },
 
     soldBox: {

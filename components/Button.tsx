@@ -7,7 +7,7 @@ type buttonType = {
     onPress: () => any
 }
 
-export default function Button({ label, textStyle, onPress }: buttonType) {
+export default function Btn({ label, textStyle, onPress }: buttonType) {
     return (
         <TouchableOpacity onPress={onPress} >
             <Text style={textStyle}>{label}</Text>
