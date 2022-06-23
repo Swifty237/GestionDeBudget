@@ -11,7 +11,6 @@ import { Picker } from "@react-native-picker/picker"
 
 const Expenses = () => {
 
-
     const validationSchema = yup.object().shape({
         name: yup.string().required("Champ obligatoire"),
         firstName: yup.string().required("Champ obligatoire"),
