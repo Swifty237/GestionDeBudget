@@ -8,6 +8,7 @@ import DatePicker from "../../components/DatePicker"
 import { Picker } from "@react-native-picker/picker"
 import uuid from "react-native-uuid"
 import Realm from "realm"
+import data from "../../assets/data.json"
 
 
 
@@ -44,7 +45,7 @@ export const mainSchema = {
 }
 
 
-const Incomes = () => {
+const Incomes: React.FC = () => {
 
     return (
         <Formik
@@ -61,7 +62,7 @@ const Incomes = () => {
                 Realm.open({
                     path: "default.realm",
                     schema: [mainSchema, incomesSchema],
-                    deleteRealmIfMigrationNeeded: true,
+                    //deleteRealmIfMigrationNeeded: true,
                 }).then(realm =>
                     realm.write(() =>
                         realm.create("Main", {
@@ -92,10 +93,11 @@ const Incomes = () => {
                                 dropdownIconColor="black"
                                 style={styles.picker}
                                 selectedValue={values.user}
-                                onValueChange={handleChange("name")}>
+                                onValueChange={handleChange("user")}>
                                 <Picker.Item style={{ color: "grey" }} label="Choisissez un utilisateur" value=" " />
-                                <Picker.Item label="Salaire et assimilé" value="salaire et assimilé" />
-                                <Picker.Item label="Revenu financier" value="Revenu Financier" />
+                                {
+                                    data.map((e, i) => e.user ? <Picker.Item key={i} label={e.user} value={e._id} /> : null)
+                                }
                             </Picker>
                         </View>
 
@@ -132,7 +134,7 @@ const Incomes = () => {
 
                     <View style={styles.containerButton}>
                         <View style={styles.register}>
-                            <Btn label="Enregistrer" textStyle={styles.btnText} onPress={() => handleSubmit()} />
+                            <Btn label="Enregistrer" textStyle={styles.btnText} onPress={handleSubmit} />
                         </View>
                     </View>
                 </View>

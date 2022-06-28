@@ -31,7 +31,7 @@ type AppType = {
 }
 
 
-const App = () => {
+const App: React.FC = () => {
 
   const { Navigator, Screen } = createNativeStackNavigator<AppType>()
 

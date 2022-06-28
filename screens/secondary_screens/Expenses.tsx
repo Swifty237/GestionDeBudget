@@ -8,6 +8,7 @@ import DatePicker from "../../components/DatePicker"
 import { Picker } from "@react-native-picker/picker"
 import uuid from "react-native-uuid"
 import { mainSchema } from "./Incomes"
+import data from "../../assets/data.json"
 
 
 const expensesSchema = {
@@ -22,11 +23,10 @@ const expensesSchema = {
 }
 
 
-const Expenses = () => {
+const Expenses: React.FC = () => {
 
     const validationSchema = yup.object().shape({
-        name: yup.string().required("Champ obligatoire"),
-        firstName: yup.string().required("Champ obligatoire"),
+        user: yup.string().required("Champ obligatoire"),
         amount: yup.number().required("Champ obligatoire"),
         date: yup.date().required("Champ obligatoire"),
         category: yup.string().required("Champ obligatoire"),
@@ -73,10 +73,11 @@ const Expenses = () => {
                                 dropdownIconColor="black"
                                 style={styles.picker}
                                 selectedValue={values.user}
-                                onValueChange={handleChange("name")}>
+                                onValueChange={handleChange("user")}>
                                 <Picker.Item style={{ color: "grey" }} label="Choisissez un utilisateur" value=" " />
-                                <Picker.Item label="Salaire et assimilé" value="salaire et assimilé" />
-                                <Picker.Item label="Revenu financier" value="Revenu Financier" />
+                                {
+                                    data.map((e, i) => e.user ? <Picker.Item key={i} label={e.user} value={e._id} /> : null)
+                                }
                             </Picker>
                         </View>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Formik } from "formik"
-import { View, ScrollView, StyleSheet, Text } from "react-native"
+import { View, ScrollView, StyleSheet } from "react-native"
 import Input from "../../components/Input"
 import Btn from "../../components/Button"
 import * as yup from "yup"
@@ -9,14 +9,14 @@ import Realm from "realm"
 
 
 
+
 const validationSchema = yup.object().shape({
     name: yup.string().required("Champ obligatoire"),
-    firstName: yup.string().required("Champ obligatoire"),
-    date: yup.date().required("Champ obligatoire")
+    firstName: yup.string().required("Champ obligatoire")
 })
 
 
-export const mainSchema = {
+const mainSchema = {
     name: "Main",
     properties: {
         _id: "int",
@@ -28,17 +28,17 @@ export const mainSchema = {
 }
 
 
-const Users = () => {
+const Users: React.FC = () => {
 
     return (
         <Formik
             validationSchema={validationSchema}
             initialValues={{
                 name: "",
-                firstName: "",
-                date: ""
+                firstName: ""
             }}
             onSubmit={values => {
+                console.log("in")
 
                 Realm.open({
                     path: "default.realm",
@@ -48,17 +48,17 @@ const Users = () => {
                     realm.write(() =>
                         realm.create("Main", {
                             _id: uuid.v4(),
-                            userName: values.name,
-                            userFirstName: values.firstName,
+                            name: values.name,
+                            firstName: values.firstName,
                             date: Date.now()
                         })
                     ))
 
                 let realmDb = new Realm({ path: "default.realm" })
                 console.log(realmDb.objects("Main"))
-                console.log("tata")
-            }
-            } >
+
+                console.log("out")
+            }} >
 
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 
@@ -70,7 +70,7 @@ const Users = () => {
 
                     <View style={styles.containerButton}>
                         <View style={styles.register}>
-                            <Btn label="Enregistrer" textStyle={styles.btnText} onPress={() => handleSubmit()} />
+                            <Btn label="Enregistrer" textStyle={styles.btnText} onPress={handleSubmit} />
                         </View>
                     </View>
                 </View>
