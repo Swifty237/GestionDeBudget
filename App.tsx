@@ -18,11 +18,22 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import Expenses from "./screens/secondary_screens/Expenses"
 import Incomes from "./screens/secondary_screens/Incomes"
+import Users from "./screens/secondary_screens/Users"
+import { MainTabsType } from "./components/Main"
+
+
+
+type AppType = {
+  Main: MainTabsType,
+  Incomes: undefined,
+  Expenses: undefined,
+  Users: undefined
+}
 
 
 const App = () => {
 
-  const { Navigator, Screen } = createNativeStackNavigator()
+  const { Navigator, Screen } = createNativeStackNavigator<AppType>()
 
   return (
     <NavigationContainer>
@@ -30,6 +41,7 @@ const App = () => {
         <Screen name="Main" component={Main} options={{ headerShown: false }} />
         <Screen name="Incomes" component={Incomes} options={{ title: "Nouveau revenu", headerTitleAlign: "center" }} />
         <Screen name="Expenses" component={Expenses} options={{ title: "Nouvelle dépense", headerTitleAlign: "center" }} />
+        <Screen name="Users" component={Users} options={{ title: "Nouvel utilisateur", headerTitleAlign: "center" }} />
       </Navigator>
     </NavigationContainer>
   )

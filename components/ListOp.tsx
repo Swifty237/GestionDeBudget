@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     operation: {
         width: "90%",
         height: "90%",
-        backgroundColor: "#34495e"
+        backgroundColor: "#2c3e50"
     }
 })
 

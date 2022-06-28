@@ -1,4 +1,5 @@
-export type IItemProp = {
+
+export type IncomeProp = {
     date: string
     amount: string
     category: string
@@ -6,7 +7,7 @@ export type IItemProp = {
     _id_income: string
 }
 
-export type EItemProp = {
+export type ExpenseProp = {
     date: string
     amount: string
     category: string
@@ -14,14 +15,23 @@ export type EItemProp = {
     _id_expense: string
 }
 
-export type itemProp = {
+export type ItemProp = {
     _id: string
     user: string
-    incomes: IItemProp[]
-    expenses: EItemProp[]
+    incomes: IncomeProp[]
+    expenses: ExpenseProp[]
 }
 
-export type MItemProp = {
+export type OperationProp = {
+    date: string
+    amount: string
+    category: string
+    comments: string
+    _id_income?: string,
+    _id_expense?: string
+}
+
+export type MergedOperationProp = {
     date: string
     amount: string
     category: string

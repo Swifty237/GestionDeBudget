@@ -5,13 +5,11 @@ import { LineChart, BarChart, PieChart } from "react-native-chart-kit"
 import { ScrollView } from "react-native-gesture-handler"
 
 
-let arrayIncomes = data.map(obj => obj.incomes) // renvoie un tableau de tableaux
-let arrayExpenses = data.map(obj => obj.expenses) // renvoie un tableau de tableaux
 const screenWidth = Dimensions.get("window").width
 const chartConfig = {
-    backgroundGradientFrom: "#34495e",
+    backgroundGradientFrom: "#2c3e50",
     backgroundGradientFromOpacity: 1,
-    backgroundGradientTo: "#34495e",
+    backgroundGradientTo: "#2c3e50",
     backgroundGradientToOpacity: 1,
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     strokeWidth: 2, // optional, default 3
@@ -75,7 +73,7 @@ const StatsScreen = () => {
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.bezier}>
-                    <Text style={{ color: "black", textAlign: "center", marginTop: 5 }}>Line chart Bezier</Text>
+                    <Text style={{ color: "#2c3e50", textAlign: "center", marginTop: 5 }}>Line chart Bezier</Text>
                     <LineChart
                         data={{
                             labels: ["January", "February", "March", "April", "May", "June"],
@@ -102,7 +100,7 @@ const StatsScreen = () => {
                     />
                 </View>
                 <View style={styles.pieCh}>
-                    <Text style={{ color: "black", textAlign: "center", marginTop: 5, borderBottomWidth: 5, borderColor: "#34495e" }}>Pie chart</Text>
+                    <Text style={{ color: "#2c3e50", textAlign: "center", marginTop: 5, borderBottomWidth: 5 }}>Pie chart</Text>
                     <PieChart
                         data={pieData}
                         width={screenWidth}
@@ -115,7 +113,7 @@ const StatsScreen = () => {
                     />
                 </View>
                 <View style={styles.barCh}>
-                    <Text style={{ color: "black", textAlign: "center", marginTop: 5 }}>Bar chart</Text>
+                    <Text style={{ color: "#2c3e50", textAlign: "center", marginTop: 5 }}>Bar chart</Text>
                     <BarChart
                         style={undefined}
                         data={barData}
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
     pieCh: {
         flex: 1,
         borderBottomWidth: 5,
-        borderColor: "#34495e"
+        borderColor: "#2c3e50"
     }
 })
 

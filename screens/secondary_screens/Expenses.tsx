@@ -6,7 +6,20 @@ import Button from "../../components/Button"
 import * as yup from "yup"
 import DatePicker from "../../components/DatePicker"
 import { Picker } from "@react-native-picker/picker"
+import uuid from "react-native-uuid"
+import { mainSchema } from "./Incomes"
 
+
+const expensesSchema = {
+    name: "Expense",
+    properties: {
+        _id: "string",
+        category: "string",
+        amount: "int",
+        comments: "string",
+        date: "string"
+    }
+}
 
 
 const Expenses = () => {
@@ -31,8 +44,27 @@ const Expenses = () => {
                 category: "",
                 comments: ""
             }}
-            onSubmit={values => console.log(values)}
-        >
+            onSubmit={values => {
+                () =>
+                    Realm.open({
+                        path: "default.realm",
+                        schema: [mainSchema, expensesSchema]
+                    }).then(realm =>
+                        realm.write(() =>
+                            realm.create("Main", {
+                                _id: uuid.v4(),
+                                user: values.name,
+                                incomes: {
+                                    _id: uuid.v4(),
+                                    category: values.category,
+                                    amount: values.amount,
+                                    comments: values.comments,
+                                    date: values.date
+                                }
+                            })
+                        ))
+            }} >
+
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <View style={styles.container}>
                     <ScrollView>
@@ -100,7 +132,7 @@ const styles = StyleSheet.create({
     },
 
     register: {
-        backgroundColor: "#34495e",
+        backgroundColor: "#2c3e50",
         marginEnd: 5,
         height: 50,
         padding: 15,

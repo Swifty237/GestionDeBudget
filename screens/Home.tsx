@@ -3,14 +3,26 @@ import { StyleSheet, Text, View } from "react-native"
 import Button from "../components/Button"
 import ListOp from "../components/ListOp"
 import data from "../assets/data.json"
-import { MItemProp, IItemProp, itemProp, EItemProp } from "../components/TypeResource"
+import { IncomeProp, ExpenseProp } from "../components/TypeResource"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 
 
-let arrayIncomes = data.map(obj => obj.incomes) // <= renvoie un tableau de tableaux d'objet
-let arrayExpenses = data.map(obj => obj.expenses) // <= renvoie un tableau de tableaux d'objet
+type HomeProp = {
+    Incomes: undefined
+    Expenses: undefined
+    Users: undefined
+}
 
-const IAmount = arrayIncomes.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
-const EAmount = arrayExpenses.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
+type NavigationType = {
+    navigation: NativeStackNavigationProp<HomeProp>
+}
+
+
+const arrayIncomes: IncomeProp[][] = data.map(obj => obj.incomes) // <= renvoie un tableau de tableaux d'objet
+const arrayExpenses: ExpenseProp[][] = data.map(obj => obj.expenses) // <= renvoie un tableau de tableaux d'objet
+
+const IAmount: number[] = arrayIncomes.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
+const EAmount: number[] = arrayExpenses.flat().map(obj => parseFloat(obj.amount.substring(1).split(",").join("")))
 
 
 let ITotal = 0
@@ -25,21 +37,23 @@ for (let i = 0; i < EAmount.length; i++) {
 }
 
 // Ecran principal
-const HomeScreen = ({ navigation }: any) => {
+const HomeScreen = ({ navigation }: NavigationType) => {
 
     return (
         <View style={styles.container}>
             <View style={styles.buttonsBox}>
                 <View style={styles.incomeBtn}>
-                    <Button label="Ajouter un revenu" textStyle={styles.incomeTxt} onPress={() => navigation.navigate("Incomes")} />
+                    <Button label="Revenu" textStyle={styles.incomeTxt} onPress={() => navigation.navigate("Incomes")} />
                 </View>
                 <View style={styles.expenseBtn}>
-                    <Button label="Ajouter une dépense" textStyle={styles.expenseTxt} onPress={() => navigation.navigate("Expenses")} />
+                    <Button label="Dépense" textStyle={styles.expenseTxt} onPress={() => navigation.navigate("Expenses")} />
                 </View>
-
+                <View style={styles.userBtn}>
+                    <Button label="Utilisateur" textStyle={styles.incomeTxt} onPress={() => navigation.navigate("Users")} />
+                </View>
             </View>
             <View style={styles.lastOpBox}>
-                <Text style={{ textAlign: "center", marginVertical: 10, fontSize: 20, fontWeight: "bold" }}>Dernières opérations</Text>
+                <Text style={{ textAlign: "center", marginVertical: 10, fontSize: 20, fontWeight: "bold", color: "white" }}>Dernières opérations</Text>
                 <ListOp />
             </View>
             <View style={styles.soldBox}>
@@ -56,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#34495e"
+        backgroundColor: "#2c3e50"
     },
 
     buttonsBox: {
@@ -66,23 +80,34 @@ const styles = StyleSheet.create({
     },
 
     incomeBtn: {
+        flex: 1,
         height: 55,
         padding: 15,
-        borderColor: "#34495e",
+        borderColor: "#2c3e50",
         borderWidth: 2,
         backgroundColor: "#ecf0f1"
     },
 
     expenseBtn: {
-        backgroundColor: "#34495e",
+        flex: 1,
+        backgroundColor: "#2c3e50",
         height: 55,
         padding: 15,
         borderWidth: 2,
         borderColor: "#ecf0f1"
     },
 
+    userBtn: {
+        flex: 1,
+        height: 55,
+        padding: 15,
+        borderColor: "#2c3e50",
+        borderWidth: 2,
+        backgroundColor: "#ecf0f1"
+    },
+
     incomeTxt: {
-        color: "#34495e",
+        color: "#2c3e50",
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 15
@@ -102,11 +127,10 @@ const styles = StyleSheet.create({
 
     soldBox: {
         flex: 1,
-        backgroundColor: "#34495e",
+        backgroundColor: "#2c3e50",
         width: "90%",
-        alignItems: "flex-end",
-        justifyContent: "center",
-        marginEnd: 50
+        alignItems: "center",
+        justifyContent: "center"
     },
 
     soldText: {
@@ -117,11 +141,13 @@ const styles = StyleSheet.create({
     },
 
     debit: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     },
 
     credit: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     }
 })
 

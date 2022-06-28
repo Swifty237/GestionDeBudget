@@ -6,7 +6,10 @@ import Btn from "../../components/Button"
 import * as yup from "yup"
 import DatePicker from "../../components/DatePicker"
 import { Picker } from "@react-native-picker/picker"
+import uuid from "react-native-uuid"
 import Realm from "realm"
+
+
 
 
 const validationSchema = yup.object().shape({
@@ -15,23 +18,31 @@ const validationSchema = yup.object().shape({
     amount: yup.number().required("Champ obligatoire"),
     date: yup.date().required("Champ obligatoire"),
     category: yup.string().required("Champ obligatoire"),
-    comments: yup.string(),
+    comments: yup.string()
 })
 
-const incomeSchema = {
-    name: "income",
+
+
+const incomesSchema = {
+    name: "Income",
     properties: {
-        _id: "int",
-        name: "string",
-        firstName: "string",
-        amount: "int",
-        date: "string",
+        _id: "string",
         category: "string",
-        comments: "string"
+        amount: "string",
+        comments: "string",
+        date: "string"
     },
-    primaryKey: "_id",
+    primaryKey: '_id'
 }
 
+export const mainSchema = {
+    name: "Main",
+    properties: {
+        _id: "string",
+        user: "string",
+        incomes: "Income"
+    },
+}
 
 
 const Incomes = () => {
@@ -47,11 +58,37 @@ const Incomes = () => {
                 category: "",
                 comments: ""
             }}
-            onSubmit={values => console.log(values)}
-        >
+            onSubmit={values => {
+
+                Realm.open({
+                    path: "default.realm",
+                    schema: [mainSchema, incomesSchema],
+                    deleteRealmIfMigrationNeeded: true,
+                }).then(realm =>
+                    realm.write(() =>
+                        realm.create("Main", {
+                            _id: "1",
+                            user: values.name,
+                            incomes: {
+                                _id: uuid.v4(),
+                                category: values.category,
+                                amount: values.amount,
+                                comments: values.comments,
+                                date: values.date
+                            }
+                        })
+                    ))
+
+                let realmDb = new Realm({ path: "default.realm" })
+                console.log(realmDb.objects("Main"))
+                console.log("tata")
+            }
+            } >
+
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 
                 <View style={styles.container}>
+
                     <ScrollView>
                         <Input label="Nom" placeholder="" value={values.name} onChangeText={handleChange("name")} onBlur={() => handleBlur("name")} error={errors.name} />
                         <Input label="Prénom" placeholder="" value={values.firstName} onChangeText={handleChange("firstName")} onBlur={() => handleBlur("firstName")} error={errors.firstName} />
@@ -76,7 +113,7 @@ const Incomes = () => {
                                     <Picker.Item label="Pension alimentaire" value="Pension Alimentaire" />
                                     <Picker.Item label="Allocation chômage" value="Allocation Chomage" />
                                     <Picker.Item label="Prestations sociales" value="Prestations Sociales" />
-                                    <Picker.Item label="Revenu foncier" value="rFoncier" />
+                                    <Picker.Item label="Revenu foncier" value="Revenu Foncier" />
                                     <Picker.Item label="Revenu exceptionnel" value="Revenu Exceptionnel" />
                                     <Picker.Item label="Autre revenu" value="Autre revenu" />
                                 </Picker>
@@ -117,7 +154,7 @@ const styles = StyleSheet.create({
     },
 
     register: {
-        backgroundColor: "#34495e",
+        backgroundColor: "#2c3e50",
         marginEnd: 5,
         height: 50,
         padding: 15,

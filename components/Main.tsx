@@ -9,9 +9,16 @@ import AccountScreen from "../screens/Account"
 import StatsScreen from "../screens/Stats"
 
 
+export type MainTabsType = {
+    Home: undefined
+    Account: undefined
+    Stats: undefined
+}
+
+
 const Main = () => {
 
-    const { Navigator, Screen } = createBottomTabNavigator()
+    const { Navigator, Screen } = createBottomTabNavigator<MainTabsType>()
 
     return (
         <Navigator initialRouteName="Home" >
@@ -22,9 +29,9 @@ const Main = () => {
 
                     return <MaterialCommunityIcons name={iconName} size={30} color={color} />
                 },
-                tabBarActiveTintColor: "#34495e",
+                tabBarActiveTintColor: "#2c3e50",
                 tabBarInactiveTintColor: "#ecf0f1",
-                tabBarInactiveBackgroundColor: "#34495e",
+                tabBarInactiveBackgroundColor: "#2c3e50",
                 headerShown: false
             })} />
 
@@ -35,12 +42,12 @@ const Main = () => {
 
                     return <Icon name={iconName} size={30} color={color} />
                 },
-                tabBarActiveTintColor: "#34495e",
+                tabBarActiveTintColor: "#2c3e50",
                 tabBarInactiveTintColor: "#ecf0f1",
-                tabBarInactiveBackgroundColor: "#34495e",
+                tabBarInactiveBackgroundColor: "#2c3e50",
                 title: "Compte",
                 headerTintColor: "white",
-                headerStyle: { backgroundColor: "#34495e" }
+                headerStyle: { backgroundColor: "#2c3e50" }
             })} />
 
             <Screen name="Stats" component={StatsScreen} options={() => ({
@@ -50,11 +57,11 @@ const Main = () => {
 
                     return <MaterialCommunityIcons name={iconName} size={30} color={color} />
                 },
-                tabBarActiveTintColor: "#34495e",
+                tabBarActiveTintColor: "#2c3e50",
                 tabBarInactiveTintColor: "#ecf0f1",
-                tabBarInactiveBackgroundColor: "#34495e",
+                tabBarInactiveBackgroundColor: "#2c3e50",
                 headerTintColor: "white",
-                headerStyle: { backgroundColor: "#34495e" }
+                headerStyle: { backgroundColor: "#2c3e50" }
             })} />
 
         </Navigator>
