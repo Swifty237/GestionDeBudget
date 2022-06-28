@@ -13,8 +13,7 @@ import Realm from "realm"
 
 
 const validationSchema = yup.object().shape({
-    name: yup.string().required("Champ obligatoire"),
-    firstName: yup.string().required("Champ obligatoire"),
+    user: yup.string().required("Champ obligatoire"),
     amount: yup.number().required("Champ obligatoire"),
     date: yup.date().required("Champ obligatoire"),
     category: yup.string().required("Champ obligatoire"),
@@ -51,8 +50,7 @@ const Incomes = () => {
         <Formik
             validationSchema={validationSchema}
             initialValues={{
-                name: "",
-                firstName: "",
+                user: "",
                 amount: "",
                 date: "",
                 category: "",
@@ -67,8 +65,7 @@ const Incomes = () => {
                 }).then(realm =>
                     realm.write(() =>
                         realm.create("Main", {
-                            _id: "1",
-                            user: values.name,
+                            user: values.user,
                             incomes: {
                                 _id: uuid.v4(),
                                 category: values.category,
@@ -90,13 +87,23 @@ const Incomes = () => {
                 <View style={styles.container}>
 
                     <ScrollView>
-                        <Input label="Nom" placeholder="" value={values.name} onChangeText={handleChange("name")} onBlur={() => handleBlur("name")} error={errors.name} />
-                        <Input label="Prénom" placeholder="" value={values.firstName} onChangeText={handleChange("firstName")} onBlur={() => handleBlur("firstName")} error={errors.firstName} />
+                        <View style={styles.userPickerBox}>
+                            <Picker
+                                dropdownIconColor="black"
+                                style={styles.picker}
+                                selectedValue={values.user}
+                                onValueChange={handleChange("name")}>
+                                <Picker.Item style={{ color: "grey" }} label="Choisissez un utilisateur" value=" " />
+                                <Picker.Item label="Salaire et assimilé" value="salaire et assimilé" />
+                                <Picker.Item label="Revenu financier" value="Revenu Financier" />
+                            </Picker>
+                        </View>
+
                         <Input label="Montant" placeholder="" value={values.amount} onChangeText={handleChange("amount")} onBlur={() => handleBlur("amount")} keyBoardNumeric={true} error={errors.amount} />
                         <DatePicker label="Date" date={values.date} onChangeDate={handleChange("date")} error={errors.date} />
 
                         <View style={styles.pickerContainer}>
-                            <View style={styles.labelBox}>
+                            <View>
                                 <Text style={styles.labelStyle}>Catégorie</Text>
                             </View>
 
@@ -139,6 +146,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center"
+    },
+
+    userPickerBox: {
+        flex: 1,
+        borderWidth: 1,
+        borderBottomColor: "grey",
+        borderRadius: 5,
+        width: 300,
+        height: 45,
+        marginVertical: 50
     },
 
     containerButton: {
@@ -185,10 +202,6 @@ const styles = StyleSheet.create({
 
     picker: {
         color: "black",
-    },
-
-    labelBox: {
-
     },
 
     labelStyle: {

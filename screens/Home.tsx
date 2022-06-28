@@ -45,11 +45,11 @@ const HomeScreen = ({ navigation }: NavigationType) => {
                 <View style={styles.incomeBtn}>
                     <Button label="Revenu" textStyle={styles.incomeTxt} onPress={() => navigation.navigate("Incomes")} />
                 </View>
+                <View style={styles.userBtn}>
+                    <Button label="Utilisateur" textStyle={styles.userTxt} onPress={() => navigation.navigate("Users")} />
+                </View>
                 <View style={styles.expenseBtn}>
                     <Button label="Dépense" textStyle={styles.expenseTxt} onPress={() => navigation.navigate("Expenses")} />
-                </View>
-                <View style={styles.userBtn}>
-                    <Button label="Utilisateur" textStyle={styles.incomeTxt} onPress={() => navigation.navigate("Users")} />
                 </View>
             </View>
             <View style={styles.lastOpBox}>
@@ -90,20 +90,20 @@ const styles = StyleSheet.create({
 
     expenseBtn: {
         flex: 1,
-        backgroundColor: "#2c3e50",
-        height: 55,
-        padding: 15,
-        borderWidth: 2,
-        borderColor: "#ecf0f1"
-    },
-
-    userBtn: {
-        flex: 1,
         height: 55,
         padding: 15,
         borderColor: "#2c3e50",
         borderWidth: 2,
         backgroundColor: "#ecf0f1"
+    },
+
+    userBtn: {
+        flex: 1,
+        backgroundColor: "#2c3e50",
+        height: 55,
+        padding: 15,
+        borderWidth: 2,
+        borderColor: "#ecf0f1"
     },
 
     incomeTxt: {
@@ -114,6 +114,13 @@ const styles = StyleSheet.create({
     },
 
     expenseTxt: {
+        color: "#2c3e50",
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: 15
+    },
+
+    userTxt: {
         color: "white",
         textAlign: "center",
         fontWeight: "bold",
