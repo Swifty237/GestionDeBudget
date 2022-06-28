@@ -58,12 +58,13 @@ const Incomes: React.FC = () => {
                 comments: ""
             }}
             onSubmit={values => {
+                console.log("in")
 
                 Realm.open({
                     path: "default.realm",
                     schema: [mainSchema, incomesSchema],
-                    //deleteRealmIfMigrationNeeded: true,
-                }).then(realm =>
+                    deleteRealmIfMigrationNeeded: true
+                }).then(realm => {
                     realm.write(() =>
                         realm.create("Main", {
                             user: values.user,
@@ -74,14 +75,12 @@ const Incomes: React.FC = () => {
                                 comments: values.comments,
                                 date: values.date
                             }
-                        })
-                    ))
+                        }))
+                    realm.close()
+                }).catch(error => console.error(error))
 
-                let realmDb = new Realm({ path: "default.realm" })
-                console.log(realmDb.objects("Main"))
                 console.log("tata")
-            }
-            } >
+            }} >
 
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 

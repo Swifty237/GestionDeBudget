@@ -44,24 +44,31 @@ const Expenses: React.FC = () => {
                 comments: ""
             }}
             onSubmit={values => {
-                () =>
-                    Realm.open({
-                        path: "default.realm",
-                        schema: [mainSchema, expensesSchema]
-                    }).then(realm =>
-                        realm.write(() =>
-                            realm.create("Main", {
+
+                Realm.open({
+                    path: "default.realm",
+                    schema: [mainSchema],
+                    deleteRealmIfMigrationNeeded: true
+
+                }).then(realm => {
+                    console.log("in")
+
+                    realm.write(() =>
+                        realm.create("Main", {
+                            user: values.user,
+                            incomes: {
                                 _id: uuid.v4(),
-                                user: values.user,
-                                incomes: {
-                                    _id: uuid.v4(),
-                                    category: values.category,
-                                    amount: values.amount,
-                                    comments: values.comments,
-                                    date: values.date
-                                }
-                            })
-                        ))
+                                category: values.category,
+                                amount: values.amount,
+                                comments: values.comments,
+                                date: values.date
+                            }
+                        }))
+                    realm.close()
+
+                }).catch(error => console.error(error))
+
+                console.log("out")
             }} >
 
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (

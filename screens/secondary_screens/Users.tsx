@@ -6,6 +6,7 @@ import Btn from "../../components/Button"
 import * as yup from "yup"
 import uuid from "react-native-uuid"
 import Realm from "realm"
+import Moment from "moment"
 
 
 
@@ -19,14 +20,39 @@ const validationSchema = yup.object().shape({
 const mainSchema = {
     name: "Main",
     properties: {
-        _id: "int",
-        userName: "string",
-        userFirstName: "string",
+        _id: "string",
+        name: "string",
+        firstName: "string",
         date: "string"
     },
     primaryKey: "_id"
 }
 
+const addUser = (values: any) => {
+    console.log("in")
+
+    Realm.open({
+        path: "default.realm",
+        schema: [mainSchema],
+        deleteRealmIfMigrationNeeded: true
+
+    }).then(realm => {
+        console.log(values)
+
+        realm.write(() => realm.create("Main", {
+            _id: uuid.v4(),
+            name: values.name,
+            firstName: values.firstName,
+            date: Moment(Date.now()).format("DD/MM/YYYY")
+        }))
+
+        console.log(realm)
+        realm.close()
+
+    }).catch(error => { console.error(error) })
+
+    console.log("out")
+}
 
 const Users: React.FC = () => {
 
@@ -37,28 +63,7 @@ const Users: React.FC = () => {
                 name: "",
                 firstName: ""
             }}
-            onSubmit={values => {
-                console.log("in")
-
-                Realm.open({
-                    path: "default.realm",
-                    schema: [mainSchema],
-                    deleteRealmIfMigrationNeeded: true,
-                }).then(realm =>
-                    realm.write(() =>
-                        realm.create("Main", {
-                            _id: uuid.v4(),
-                            name: values.name,
-                            firstName: values.firstName,
-                            date: Date.now()
-                        })
-                    ))
-
-                let realmDb = new Realm({ path: "default.realm" })
-                console.log(realmDb.objects("Main"))
-
-                console.log("out")
-            }} >
+            onSubmit={addUser} >
 
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
 
@@ -75,7 +80,7 @@ const Users: React.FC = () => {
                     </View>
                 </View>
             )}
-        </Formik>
+        </Formik >
     )
 }
 
